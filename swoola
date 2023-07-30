@@ -27,7 +27,6 @@ if (strtolower(@$argv[1]) == 'start') {
         exit;
     }
 } elseif (strtolower(@$argv[1]) == 'stop') {
-    return;
     for ($i = 0; $i < 10; $i++) {
         exec("sudo kill $(sudo lsof -t -i:$argv[2]) >/dev/null 2>&1");
         exec("sudo kill -9 $(sudo lsof -t -i:$argv[2])");
