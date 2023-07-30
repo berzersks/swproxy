@@ -1,0 +1,33 @@
+#!/bin/bash
+
+function installPhp74() {
+    echo "Instalando o PHP 7.4..."
+
+    sudo apt -y install software-properties-common
+    sudo add-apt-repository ppa:ondrej/php -y
+    sudo apt update
+    sudo apt install -y php7.4-{bcmath,bz2,intl,gd,mbstring,mysql,zip,common,xml,curl,dev}
+
+    echo "O PHP 7.4 foi instalado com sucesso!"
+}
+
+function checkPhp74Installed() {
+    if php -v | grep -q "PHP 7.4"; then
+        echo "O PHP 7.4 já está instalado."
+    else
+        echo "O PHP 7.4 não está instalado."
+        installPhp74
+    fi
+}
+
+function checkSwooleInstalled() {
+    if php -m | grep -q "swoole"; then
+        echo "O Swoole já está instalado."
+    else
+        echo "O Swoole não está instalado."
+        sudo apt install -y php7.4-swoole
+    fi
+}
+
+checkPhp74Installed
+checkSwooleInstalled

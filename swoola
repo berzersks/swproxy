@@ -1,0 +1,44 @@
+#!/usr/bin/php
+<?php
+include 'plugins/autoloader.php';
+
+if (strtolower(@$argv[1]) == 'start') {
+    if (count($argv) !== 6) {
+        print (new \plugins\Start\console())->color('Por favor forneça corretamente os parâmetros. Ex:', 'light_green') . PHP_EOL;
+        for ($i = 0; $i < 4; $i++) print ' ';
+        print (new \plugins\Start\console())->color("./swoola start MyNameServer 9500 https://www.youtube.com:443 auto-secure", 'yellow') . PHP_EOL;
+        for ($i = 0; $i < 4; $i++) print ' ';
+        print (new \plugins\Start\console())->color('Em https://www.youtube.com ":443" não é obrigatório.', 'blue') . PHP_EOL;
+        print (new \plugins\Start\console())->color("Tente novamente!!!", 'light_green') . PHP_EOL;
+        exit;
+    }
+    $code = 'php runner.php ' . $argv[3] . ' ' . $argv[4] . ' ' . $argv[5];
+    if (!Utils\swoola::openPort('localhost', $argv[3])) {
+        \plugins\Start\server::startServer($argv[2] . '__', $code);
+        exec('screen -ls', $outputCommand);
+        foreach ($outputCommand as $line) {
+            if (strpos($line, 'Detached') !== false && strpos($line, $argv[2]) !== false) {
+                $epsplit = trim(explode('__', $line)[0]);
+                exec("screen -r -d $epsplit");
+            }
+        }
+    } else {
+        print (new \plugins\Start\console())->color("Porta local ocupada.", 'light_red') . PHP_EOL;
+        exit;
+    }
+} elseif (strtolower(@$argv[1]) == 'stop') {
+    return;
+    for ($i = 0; $i < 10; $i++) {
+        exec("sudo kill $(sudo lsof -t -i:$argv[2]) >/dev/null 2>&1");
+        exec("sudo kill -9 $(sudo lsof -t -i:$argv[2])");
+        exec("sudo screen -ls | grep '(Detached)' | awk '{print $1}' | xargs -I % -t screen -X -S % quit");
+        if (!Utils\swoola::openPort('localhost', $argv[2])) {
+            print (new \plugins\Start\console())->color("Porta $argv[2] finalizada com sucesso!", 'light_green') . PHP_EOL;
+            exit;
+        }
+    }
+    print (new \plugins\Start\console())->color("Porta não foi finalizada, tente novamente.", 'light_red') . PHP_EOL;
+}
+
+
+
