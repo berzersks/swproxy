@@ -1,7 +1,7 @@
 # Swoole Relay
 ## _Um servidor de retransmissão_
 
-se você acessar http://127.0.0.1:9501 ele seria como http://example.com onde apenas GET/GET funcionam.
+se você acessar http://127.0.0.1:9501 ele seria como http://example.com onde apenas GET/POST funcionam.
 
 ## Instalação
 
