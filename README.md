@@ -30,7 +30,7 @@ Caso deseje utilizar SSL:
 ## Porque estou proíbido de usar em produção?
 
 Este projeto foi apenas o resultado de várias conversas de dois amigos pela madrugada. 
-Eu o **autor** sempre estou com a mente derramando café em neve, meu colega Kris[Parabellium] deve estar, segurando uma garrafa de bebida.
+Eu o **autor** sempre estou com a mente derramando café em neve, meu colega Kris[Parabellium] deve estar segurando uma garrafa de bebida.
 
 **PORQUE VOCÊ UTILIZARIA ESTE PROJETO EM PRODUÇÃO?!**
 
